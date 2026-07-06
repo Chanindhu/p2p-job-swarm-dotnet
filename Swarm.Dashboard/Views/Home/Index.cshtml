@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Swarm Dashboard";
+    var baseUrl = (string)(ViewBag.ServerBaseUrl ?? "http://localhost:5265");
+}
+
+<h2>Swarm Dashboard</h2>
+<p>Reading from: <code>@baseUrl</code></p>
+
+<table id="grid" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Host</th>
+            <th>Port</th>
+            <th>Last Seen (local)</th>
+            <th>Status</th>
+            <th>Jobs</th>
+        </tr>
+    </thead>
+    <tbody id="rows">
+        <tr><td colspan="6">Loading…</td></tr>
+    </tbody>
+</table>
+
+<script>
+    const SERVER_BASE = '@baseUrl';
+
+    function fmtDate(d) { try { return d.toLocaleString(); } catch { return ''; } }
+
+    async function refresh(){
+      try{
+        const res = await fetch(`${SERVER_BASE}/api/clients?t=${Date.now()}`, { cache: 'no-store' });
+        if(!res.ok){ throw new Error(`HTTP ${res.status}`); }
+        const list = await res.json();
+
+        const html = list.map(c => {
+          const last = new Date(c.lastSeenUtc);
+          const online = !!c.isOnline;
+          return `<tr>
+            <td>${c.displayName || ''}</td>
+            <td>${c.ipOrHost}</td>
+            <td>${c.port}</td>
+            <td>${fmtDate(last)}</td>
+            <td>${online
+                ? '<span style="color:green;font-weight:bold;">Online</span>'
+                : '<span style="color:#b00;font-weight:bold;">Offline</span>'}</td>
+            <td>${c.totalJobsDone}</td>
+          </tr>`;
+        }).join('');
+
+        document.getElementById('rows').innerHTML = html || '<tr><td colspan="6">No clients yet</td></tr>';
+      }catch(err){
+        document.getElementById('rows').innerHTML = `<tr><td colspan="6">Error: ${err.message}</td></tr>`;
+      }
+    }
+    refresh();
+    setInterval(refresh, 60_000);
+</script>

@@ -1,0 +1,318 @@
+﻿<Window x:Class="Swarm.Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Job Swarm Client" Height="680" Width="1380" Background="#F7F9FC">
+    <Window.Resources>
+        <!-- Theme brushes -->
+        <SolidColorBrush x:Key="AccentBrush" Color="#4F46E5"/>
+        <!-- indigo-600 -->
+        <SolidColorBrush x:Key="PanelBrush" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="SoftBorderBrush" Color="#E5E7EB"/>
+        <FontFamily x:Key="Mono">Consolas</FontFamily>
+
+        <!-- Card-like GroupBox -->
+        <Style TargetType="GroupBox">
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="Background" Value="{StaticResource PanelBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource SoftBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <!-- Base rounded button (light theme) -->
+        <Style x:Key="BaseBtn" TargetType="Button">
+            <Setter Property="Foreground" Value="#111827"/>
+            <Setter Property="Background" Value="#F3F4F6"/>
+            <!-- gray-100 -->
+            <Setter Property="BorderBrush" Value="{StaticResource SoftBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="6,4"/>
+            <Setter Property="Margin" Value="8,0,0,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bd"
+                                CornerRadius="8"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Margin="6,2"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#E5E7EB"/>
+                                <!-- gray-200 -->
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#D1D5DB"/>
+                                <!-- gray-300 -->
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.6"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Primary button -->
+        <Style x:Key="PrimaryBtn" TargetType="Button" BasedOn="{StaticResource BaseBtn}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bd" CornerRadius="8"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6,2"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#4338CA"/>
+                                <!-- indigo-700 -->
+                                <Setter TargetName="bd" Property="BorderBrush" Value="#4338CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#3730A3"/>
+                                <!-- indigo-800 -->
+                                <Setter TargetName="bd" Property="BorderBrush" Value="#3730A3"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.6"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Danger button -->
+        <Style x:Key="DangerBtn" TargetType="Button" BasedOn="{StaticResource BaseBtn}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#DC2626"/>
+            <!-- red-600 -->
+            <Setter Property="BorderBrush" Value="#DC2626"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bd" CornerRadius="8"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6,2"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#B91C1C"/>
+                                <!-- red-700 -->
+                                <Setter TargetName="bd" Property="BorderBrush" Value="#B91C1C"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#991B1B"/>
+                                <!-- darker red -->
+                                <Setter TargetName="bd" Property="BorderBrush" Value="#991B1B"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.6"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Subtle TextBox -->
+        <Style TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="{StaticResource SoftBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="6,4"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- top bar -->
+            <RowDefinition Height="*"/>
+            <!-- middle -->
+            <RowDefinition Height="Auto"/>
+            <!-- spacer -->
+            <RowDefinition Height="260"/>
+            <!-- log -->
+        </Grid.RowDefinitions>
+
+        <!-- Top config (card) -->
+        <GroupBox Header="Configuration">
+            <DockPanel LastChildFill="True">
+                <!-- WrapPanel prevents overflow/overlap when window narrows -->
+                <WrapPanel Margin="4" ItemHeight="32">
+                    <TextBlock Text="Server Base URL:" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TxtServer" Width="300" Margin="8,0,0,0" Text="http://localhost:5265" />
+
+                    <TextBlock Text="Host/IP:" VerticalAlignment="Center" Margin="16,0,0,0"/>
+                    <TextBox x:Name="TxtHost" Width="150" Margin="8,0,0,0" Text="localhost">
+                        <TextBox.ToolTip>
+                            The address peers will use to reach your remoting server (use LAN IP for multi-PC).
+                        </TextBox.ToolTip>
+                    </TextBox>
+
+                    <TextBlock Text="Listen Port:" VerticalAlignment="Center" Margin="16,0,0,0"/>
+                    <TextBox x:Name="TxtPort" Width="90" Margin="8,0,0,0" Text="9001"/>
+
+                    <TextBlock Text="Display Name:" VerticalAlignment="Center" Margin="16,0,0,0"/>
+                    <TextBox x:Name="TxtName" Width="160" Margin="8,0,0,0" Text="Client A"/>
+
+                    <Button x:Name="BtnStart" Content="Start" Width="100" Style="{StaticResource PrimaryBtn}" Click="BtnStart_Click"/>
+                    <Button x:Name="BtnStop" Content="Stop" Width="90" Style="{StaticResource DangerBtn}" Click="BtnStop_Click" IsEnabled="False"/>
+                </WrapPanel>
+            </DockPanel>
+        </GroupBox>
+
+        <!-- Middle: code + status -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="400"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Code panel -->
+            <GroupBox Header="Python (prints or set 'result')" Margin="0,0,12,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBox x:Name="TxtPython" Grid.Row="0" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
+                             FontFamily="{StaticResource Mono}" FontSize="14" />
+
+                    <DockPanel Grid.Row="1" Margin="0,8,0,0">
+                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                            <Button x:Name="BtnClearCode" Content="Clear Code" Width="110"
+                                    Style="{StaticResource BaseBtn}" Click="BtnClearCode_Click"/>
+                            <Button x:Name="BtnLoadFile" Content="Load File" Width="100"
+                                    Style="{StaticResource BaseBtn}" Click="BtnLoadFile_Click"/>
+                            <Button x:Name="BtnSubmit" Content="Queue Job" Width="110"
+                                    Style="{StaticResource PrimaryBtn}" Click="BtnSubmit_Click" IsEnabled="False"/>
+                        </StackPanel>
+                    </DockPanel>
+                </Grid>
+            </GroupBox>
+
+            <!-- Status panel -->
+            <GroupBox Grid.Column="1" Header="Status">
+                <Grid Margin="8">
+                    <!-- Make room for a bigger Last result box -->
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <!-- 0: endpoint -->
+                        <RowDefinition Height="Auto"/>
+                        <!-- 1: working -->
+                        <RowDefinition Height="Auto"/>
+                        <!-- 2: jobs -->
+                        <RowDefinition Height="Auto"/>
+                        <!-- 3: peers -->
+                        <RowDefinition Height="Auto"/>
+                        <!-- 4: label -->
+                        <RowDefinition Height="*"/>
+                        <!-- 5: last result (stretch) -->
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Self endpoint -->
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Self endpoint:" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" x:Name="LblSelf" FontWeight="Bold" />
+
+                    <!-- Working: grid prevents overlap with progress -->
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Working:" VerticalAlignment="Center"/>
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" x:Name="LblWorking" FontWeight="Bold" Text="Idle"/>
+                        <ProgressBar Grid.Column="2" x:Name="BarWorking" Height="10" IsIndeterminate="True" Visibility="Collapsed"/>
+                    </Grid>
+
+                    <!-- Jobs completed -->
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Jobs completed:" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" x:Name="LblCount" FontWeight="Bold" Text="0"/>
+
+                    <!-- Peers row: count + two buttons in grid (no clipping) -->
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Peers seen:" VerticalAlignment="Center"/>
+                    <Grid Grid.Row="3" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <!-- peers count -->
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <!-- refresh -->
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <!-- check status -->
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" x:Name="LblPeers" FontWeight="Bold" Text="0"/>
+                        <Button Grid.Column="2" x:Name="BtnPeersRefresh" Content="Refresh" Width="80"
+                                Style="{StaticResource BaseBtn}" Click="BtnPeersRefresh_Click" />
+                        <Button Grid.Column="2" x:Name="BtnCheckStatus" Content="Check Status" Width="90"
+                                Style="{StaticResource BaseBtn}" Click="BtnCheckStatus_Click" Grid.ColumnSpan="3" Margin="99,0,27,0" />
+                    </Grid>
+
+                    <!-- Last result -->
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Last result:" VerticalAlignment="Top"/>
+                    <TextBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" x:Name="TxtLast"
+                             IsReadOnly="True" MinHeight="140"
+                             TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+                </Grid>
+            </GroupBox>
+        </Grid>
+
+        <!-- spacer -->
+        <DockPanel Grid.Row="2"/>
+
+        <!-- System Log -->
+        <GroupBox Grid.Row="3">
+            <GroupBox.Header>
+                <DockPanel LastChildFill="True">
+                    <TextBlock Text="System Log (Real-Time Debug)" FontWeight="Bold" DockPanel.Dock="Left"/>
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                        <Button x:Name="BtnClearLog" Content="Clear Log"
+                                Style="{StaticResource BaseBtn}" Click="BtnClearLog_Click"/>
+                        <CheckBox x:Name="ChkAutoScroll" Content="Auto-scroll" IsChecked="True" VerticalAlignment="Center"
+                                  Checked="ChkAutoScroll_Checked" Unchecked="ChkAutoScroll_Unchecked"/>
+                    </StackPanel>
+                </DockPanel>
+            </GroupBox.Header>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="System messages and errors appear here" Foreground="#6B7280" Margin="4,0,0,4"/>
+
+                <Border Grid.Row="1" Background="#0B1220" BorderBrush="#111827" BorderThickness="1" CornerRadius="4" Padding="6">
+                    <ListBox x:Name="LogList" FontFamily="{StaticResource Mono}" FontSize="13"
+                             Foreground="#E5E7EB" Background="Transparent"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+                </Border>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Window>
