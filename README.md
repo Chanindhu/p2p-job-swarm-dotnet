@@ -51,17 +51,22 @@ This repository contains three runnable applications:
 - RestSharp
 - Newtonsoft.Json
 
-## Repository structure
+## Repository Structure
 
 ```text
 p2p-job-swarm-dotnet/
-‚îú‚îÄ‚îÄ JobSwarm.sln
-‚îú‚îÄ‚îÄ Swarm.Server/       # Central registry API and SQLite database layer
-‚îú‚îÄ‚îÄ Swarm.Client/       # WPF peer client and .NET Remoting job board
-‚îú‚îÄ‚îÄ Swarm.Dashboard/    # MVC dashboard for swarm monitoring
-‚îú‚îÄ‚îÄ docs/               # Architecture, API, and run notes
-‚îú‚îÄ‚îÄ samples/            # Example Python job snippets
-‚îî‚îÄ‚îÄ postman/            # API testing notes
+|-- JobSwarm.sln
+|-- Swarm.Server/                             # Central registry API and SQLite database layer
+|-- Swarm.Client/                             # WPF peer client and .NET Remoting job board
+|-- Swarm.Dashboard/                          # MVC dashboard for swarm monitoring
+|-- docs/
+|   |-- api-endpoints.md
+|   |-- architecture-notes.md
+|   `-- build-and-run.md
+|-- samples/                                  # Example Python job snippets
+|-- postman/                                  # API testing notes
+|-- .gitignore
+`-- README.md
 ```
 
 ## Run locally
