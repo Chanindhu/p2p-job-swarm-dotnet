@@ -23,6 +23,19 @@ This repository contains three runnable applications:
 - Dashboard refresh support for monitoring connected swarm clients.
 - Background cleanup service for stale or offline clients.
 
+## Proof and Validation Evidence
+
+| Evidence | Where to inspect it | What it proves |
+|---|---|---|
+| Registry API | [`Swarm.Server/`](Swarm.Server/) | The central registration and heartbeat service is implemented. |
+| WPF client | [`Swarm.Client/`](Swarm.Client/) | Peer job submission and execution are exposed through a desktop client. |
+| Monitoring dashboard | [`Swarm.Dashboard/`](Swarm.Dashboard/) | Connected clients and swarm state can be reviewed visually. |
+| API endpoint notes | [`docs/api-endpoints.md`](docs/api-endpoints.md) | The registry endpoints are documented for review and testing. |
+| Architecture notes | [`docs/architecture-notes.md`](docs/architecture-notes.md) | The peer-to-peer job flow, hashing, and registry responsibilities are explained. |
+| Build and run guide | [`docs/build-and-run.md`](docs/build-and-run.md) | The multi-project .NET solution can be run locally from documented steps. |
+| Sample jobs | [`samples/`](samples/) | Reviewers can inspect runnable job payload examples. |
+| API collection notes | [`postman/README.md`](postman/README.md) | Registry workflows can be exercised with a prepared API collection. |
+
 ## Technology stack
 
 - C#
@@ -42,13 +55,13 @@ This repository contains three runnable applications:
 
 ```text
 p2p-job-swarm-dotnet/
-├── JobSwarm.sln
-├── Swarm.Server/       # Central registry API and SQLite database layer
-├── Swarm.Client/       # WPF peer client and .NET Remoting job board
-├── Swarm.Dashboard/    # MVC dashboard for swarm monitoring
-├── docs/               # Architecture, API, and run notes
-├── samples/            # Example Python job snippets
-└── postman/            # API testing notes
+‚îú‚îÄ‚îÄ JobSwarm.sln
+‚îú‚îÄ‚îÄ Swarm.Server/       # Central registry API and SQLite database layer
+‚îú‚îÄ‚îÄ Swarm.Client/       # WPF peer client and .NET Remoting job board
+‚îú‚îÄ‚îÄ Swarm.Dashboard/    # MVC dashboard for swarm monitoring
+‚îú‚îÄ‚îÄ docs/               # Architecture, API, and run notes
+‚îú‚îÄ‚îÄ samples/            # Example Python job snippets
+‚îî‚îÄ‚îÄ postman/            # API testing notes
 ```
 
 ## Run locally
